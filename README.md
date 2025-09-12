@@ -81,9 +81,9 @@ Các yêu cầu chức năng được mô tả dưới dạng User Stories và �
 
 *   **Nhóm 3: Quy Trình Nghiệp Vụ (Business Process)**
     *  > **UC6:** Với vai trò là **Lễ tân**, tôi muốn **đăng ký thông tin cho bệnh nhân mới** hoặc **tìm kiếm hồ sơ của bệnh nhân đã có**.
-    *   **UC7:** Với vai trò là **Lễ tân**, tôi muốn **đặt, dời hoặc hủy lịch hẹn** cho bệnh nhân trên giao diện lịch làm việc (calendar view).
+    *  > **UC7:** Với vai trò là **Lễ tân**, tôi muốn **đặt, dời hoặc hủy lịch hẹn** cho bệnh nhân trên giao diện lịch làm việc (calendar view).
     *  > **UC8:** Với vai trò là **Lễ tân**, tôi muốn **quản lý hàng đợi khám bệnh** trong ngày và thực hiện **check-in** cho bệnh nhân khi họ đến.
-    *   **UC9:** Với vai trò là **Bác sĩ**, tôi muốn **xem danh sách các bệnh nhân đang chờ đến lượt khám** của mình.
+    *  > **UC9:** Với vai trò là **Bác sĩ**, tôi muốn **xem danh sách các bệnh nhân đang chờ đến lượt khám** của mình.
     *  > **UC10:** Với vai trò là **Bác sĩ**, tôi muốn **mở hồ sơ bệnh án** để xem toàn bộ lịch sử y tế của bệnh nhân, bao gồm các chẩn đoán và đơn thuốc trong quá khứ.
     *  > **UC11:** Với vai trò là **Bác sĩ**, tôi muốn **ghi lại các chỉ số sinh tồn, triệu chứng và chẩn đoán** cho lần khám hiện tại.
     *  > **UC12:** Với vai trò là **Bác sĩ**, tôi muốn **nhận được gợi ý mã ICD-10 từ AI** ngay khi tôi đang nhập thông tin chẩn đoán.
