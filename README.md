@@ -1,7 +1,5 @@
 # G3-SE1961-NJ-SWP391-FAL25
 
-<div style="border: 3px solid white; padding: 10px; border-radius: 10px">
-
 > **Temporary part: Số thành viên đã push và synch repo thành công thì thêm ✅ vào tên của mình (modify [README.md](https://gitlab.com/manhnc2/g3-se1961-nj-swp391-fal25/-/blob/main/README.md))**
 
 - Lê Văn Quân : ✅
@@ -10,8 +8,6 @@
 - Trịnh Minh Quang :
 - Triệu Việt Long :
 - Nguyễn Ngọc Linh : 
-
-</div>
 
 ## Getting started
 
