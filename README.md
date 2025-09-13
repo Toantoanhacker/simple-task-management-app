@@ -4,6 +4,16 @@
 
 > **Giới thiệu:** ClinicSys là một hệ thống hồ sơ bệnh án điện tử (Electronic Medical Record - EMR) được thiết kế nhằm đơn giản hóa quy trình làm việc cho các phòng khám tư nhân quy mô vừa và nhỏ tại Việt Nam.
 
+> **Công nghệ sử dụng:** Java, Servlet, JSP
+
+---
+
+* Timeline, phân công, manage dự án của nhóm: **[SE1961-NJ-SWP391-G3 Project Management 
+](https://docs.google.com/spreadsheets/d/1jmVq4Bixuxn-bxZcJorjfEnwfoqaIOr0/edit?usp=sharing&ouid=117645623625860497137&rtpof=true&sd=true)**
+
+* Thư mục drive: **[SE1961-NJ-SWP391-G3](https://drive.google.com/drive/folders/1rY4_wGzPTmFKsD4q7r7nu2vjv1kCaP4n)**
+
+---
 
 ### **1. Bối Cảnh và Vấn Đề (Problem Statement)**
 
