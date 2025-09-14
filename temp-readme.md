@@ -7,7 +7,7 @@
 - Vũ Mạnh Dũng : ✅
 - Trịnh Minh Quang :✅
 - Triệu Việt Long : ✅
-- Nguyễn Ngọc Linh : 
+- Nguyễn Ngọc Linh : ✅
 
 ## Getting started
 
