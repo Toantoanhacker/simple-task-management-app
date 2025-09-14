@@ -4,7 +4,7 @@
 
 - Lê Văn Quân : ✅
 - Nguyễn Cảnh Toàn: ✅
-- Vũ Mạnh Dũng : 
+- Vũ Mạnh Dũng : ✅
 - Trịnh Minh Quang :
 - Triệu Việt Long : ✅
 - Nguyễn Ngọc Linh : 
