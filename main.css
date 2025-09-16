@@ -1,106 +1,118 @@
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #2c2c2c;
-      display: flex;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #2c2c2c;
+  display: flex;
+}
 
-    /* Sidebar styles */
-    .sidebar {
-      width: 200px;
-      background: #2c2c2c;
-      color: #fff;
-      height: 100vh;
-      overflow-y: auto;
-      padding: 35px;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
+/* Sidebar styles */
+.sidebar {
+  width: 200px;
+  background: #2c2c2c;
+  color: #fff;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 35px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 
-    .sidebar h2 {
-      font-size: 16px;
-      margin-bottom: 10px;
-      color: #ccc;
-    }
+.sidebar h2 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #ccc;
+}
 
-    .sidebar a {
-      display: block;
-      padding: 8px 0;
-      color: #ddd;
-      text-decoration: none;
-      transition: 0.2s;
-    }
+.sidebar a {
+  display: block;
+  padding: 8px 0;
+  color: #ddd;
+  text-decoration: none;
+  transition: 0.2s;
+}
 
-    .sidebar a:hover {
-      color: #fff;
-    }
+.sidebar a:hover {
+  color: #fff;
+}
 
-    /* Main content styles */
-    .content {
-      margin-left: 270px; /* leave space for sidebar */
-      padding: 20px;
-      background: #888888;
-      flex: 1;
-    }
+/* Main content styles */
+.content {
+  margin-left: 270px; /* leave space for sidebar */
+  padding: 20px;
+  background: #888888;
+  flex: 1;
+}
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
 
-    .gallery figure {
-      margin: 0;
-      background: white;
-      border: 2px solid black;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      text-align: center;
-      cursor: pointer;
-    }
+  /* Default figure style */
+  .gallery figure {
+    margin: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px;
+    transition: border 0.3s, box-shadow 0.3s;
+  }
 
-    .gallery img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+  /* Highlighted figure */
+  .gallery figure.highlight {
+    border: 3px solid #007bff;
+    box-shadow: 0 0 15px rgba(0,123,255,0.6);
+  }
 
-    .gallery figcaption {
-      padding: 10px;
-      font-size: 14px;
-      background: #f0f0f0;
-      color: #555;
-    }
+.gallery img {
+  max-width: 100%;
+  max-height: 300px; /* ✅ ensures image fits within the box */
+  object-fit: contain; /* ✅ keeps aspect ratio, no cropping */
+  flex-grow: 1;
+}
 
-    /* Lightbox styles */
-    .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-    }
+.gallery figcaption {
+  padding: 10px;
+  font-size: 14px;
+  background: #f0f0f0;
+  color: #555;
+}
 
-    .lightbox img {
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-    }
 
-    .lightbox span {
-      position: absolute;
-      top: 20px;
-      right: 40px;
-      font-size: 40px;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
+/* Lightbox styles */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.lightbox span {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
