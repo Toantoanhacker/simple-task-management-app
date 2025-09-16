@@ -4,80 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UI Templates Gallery with Sidebar</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-    }
-
-    /* Sidebar styles */
-    .sidebar {
-      width: 250px;
-      background: #2c2c2c;
-      color: #fff;
-      height: 100vh;
-      overflow-y: auto;
-      padding: 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-
-    .sidebar h2 {
-      font-size: 16px;
-      margin-bottom: 10px;
-      color: #ccc;
-    }
-
-    .sidebar a {
-      display: block;
-      padding: 8px 0;
-      color: #ddd;
-      text-decoration: none;
-      transition: 0.2s;
-    }
-
-    .sidebar a:hover {
-      color: #fff;
-    }
-
-    /* Main content styles */
-    .content {
-      margin-left: 270px; /* leave space for sidebar */
-      padding: 20px;
-      background: #f9f9f9;
-      flex: 1;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    .gallery figure {
-      margin: 0;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .gallery img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .gallery figcaption {
-      padding: 10px;
-      font-size: 14px;
-      background: #f0f0f0;
-      color: #555;
-    }
-  </style>
+  <link rel="stylesheet" href="/main.css">
 </head>
 <body>
   <!-- Sidebar navigation -->
@@ -124,41 +51,49 @@
   <div class="content">
     <h1>UI Templates Gallery</h1>
     <div class="gallery">
-      <figure id="home"><img src="images/home.png" alt="Home"><figcaption>Home</figcaption></figure>
-      <figure id="p404"><img src="images/404.png" alt="404"><figcaption>404</figcaption></figure>
-      <figure id="login"><img src="images/login.png" alt="Login"><figcaption>Login</figcaption></figure>
-      <figure id="forgot"><img src="images/forgot.png" alt="Forgot Password"><figcaption>Forgot Password</figcaption></figure>
-      <figure id="change"><img src="images/change-password.png" alt="Change Password"><figcaption>Change Password</figcaption></figure>
-      <figure id="signup"><img src="images/signup.png" alt="Signup/Register"><figcaption>Signup/Register</figcaption></figure>
-      <figure id="reset"><img src="images/reset.png" alt="Reset Password"><figcaption>Reset Password</figcaption></figure>
-      <figure id="verify"><img src="images/verify.png" alt="Verify Email"><figcaption>Verify Email</figcaption></figure>
-      <figure id="dashboard"><img src="images/dashboard.png" alt="Dashboard"><figcaption>Dashboard</figcaption></figure>
-      <figure id="sa1"><img src="images/sa1.png" alt="SA - Schedule Appointment - Patient"><figcaption>SA - Schedule Appointment - Patient</figcaption></figure>
-      <figure id="sa2"><img src="images/sa2.png" alt="SA - Schedule Appointment Final Step"><figcaption>SA - Schedule Appointment Final Step</figcaption></figure>
-      <figure id="sa3"><img src="images/sa3.png" alt="SA - Patients List"><figcaption>SA - Patients List</figcaption></figure>
-      <figure id="sa4"><img src="images/sa4.png" alt="SA - Schedule Appointment Step 2"><figcaption>SA - Schedule Appointment Step 2</figcaption></figure>
-      <figure id="sa5"><img src="images/sa5.png" alt="SA - Add Patient Medical History"><figcaption>SA - Add Patient Medical History</figcaption></figure>
-      <figure id="sa6"><img src="images/sa6.png" alt="SA - Update Patient Appointment Details"><figcaption>SA - Update Patient Appointment Details</figcaption></figure>
-      <figure id="test"><img src="images/test.png" alt="Test"><figcaption>Test</figcaption></figure>
-      <figure id="billing"><img src="images/billing.png" alt="SA - Billing Details"><figcaption>SA - Billing Details</figcaption></figure>
-      <figure id="doc1"><img src="images/doc1.png" alt="Doctor - Add Patient"><figcaption>Doctor - Add Patient</figcaption></figure>
-      <figure id="summary"><img src="images/summary.png" alt="Patient Summary"><figcaption>Patient Summary</figcaption></figure>
-      <figure id="doc2"><img src="images/doc2.png" alt="Doctor Add Patient Details"><figcaption>Doctor Add Patient Details</figcaption></figure>
-      <figure id="doc3"><img src="images/doc3.png" alt="Doctor Add Existing Patient Appointment"><figcaption>Doctor Add Existing Patient Appointment</figcaption></figure>
-      <figure id="doc4"><img src="images/doc4.png" alt="Doctor Add New Patient Appointment"><figcaption>Doctor Add New Patient Appointment</figcaption></figure>
-      <figure id="patient1"><img src="images/patient1.png" alt="Patient Update Personal Details"><figcaption>Patient Update Personal Details</figcaption></figure>
-      <figure id="patient2"><img src="images/patient2.png" alt="Patient Encounter Details"><figcaption>Patient Encounter Details</figcaption></figure>
-      <figure id="sa7"><img src="images/sa7.png" alt="SA - Practitioners List"><figcaption>SA - Practitioners List</figcaption></figure>
-      <figure id="patient3"><img src="images/patient3.png" alt="Patient Appointment History"><figcaption>Patient Appointment History</figcaption></figure>
-      <figure id="sa8"><img src="images/sa8.png" alt="SA - Dashboard"><figcaption>SA - Dashboard</figcaption></figure>
-      <figure id="patient4"><img src="images/patient4.png" alt="Patient Medical History"><figcaption>Patient Medical History</figcaption></figure>
-      <figure id="test2"><img src="images/test2.png" alt="Test Page"><figcaption>Test Page</figcaption></figure>
-      <figure id="apptest"><img src="images/apptest.png" alt="Test Appointment"><figcaption>Test Appointment</figcaption></figure>
-      <figure id="patient5"><img src="images/patient5.png" alt="Patient Book Appointment"><figcaption>Patient Book Appointment</figcaption></figure>
-      <figure id="patient6"><img src="images/patient6.png" alt="Patient Dashboard"><figcaption>Patient Dashboard</figcaption></figure>
-      <figure id="doc5"><img src="images/doc5.png" alt="Doctor - Patient Consultation"><figcaption>Doctor - Patient Consultation</figcaption></figure>
-      <figure id="doc6"><img src="images/doc6.png" alt="Doctor - Appointments"><figcaption>Doctor - Appointments</figcaption></figure>
+      <figure id="home"><img src="images/a.png" alt="Home"><figcaption>Home</figcaption></figure>
+      <figure id="p404"><img src="images" alt="404"><figcaption>404</figcaption></figure>
+      <figure id="login"><img src="images" alt="Login"><figcaption>Login</figcaption></figure>
+      <figure id="forgot"><img src="images" alt="Forgot Password"><figcaption>Forgot Password</figcaption></figure>
+      <figure id="change"><img src="images" alt="Change Password"><figcaption>Change Password</figcaption></figure>
+      <figure id="signup"><img src="images" alt="Signup/Register"><figcaption>Signup/Register</figcaption></figure>
+      <figure id="reset"><img src="images" alt="Reset Password"><figcaption>Reset Password</figcaption></figure>
+      <figure id="verify"><img src="images" alt="Verify Email"><figcaption>Verify Email</figcaption></figure>
+      <figure id="dashboard"><img src="images" alt="Dashboard"><figcaption>Dashboard</figcaption></figure>
+      <figure id="sa1"><img src="images" alt="SA - Schedule Appointment - Patient"><figcaption>SA - Schedule Appointment - Patient</figcaption></figure>
+      <figure id="sa2"><img src="images" alt="SA - Schedule Appointment Final Step"><figcaption>SA - Schedule Appointment Final Step</figcaption></figure>
+      <figure id="sa3"><img src="images" alt="SA - Patients List"><figcaption>SA - Patients List</figcaption></figure>
+      <figure id="sa4"><img src="images" alt="SA - Schedule Appointment Step 2"><figcaption>SA - Schedule Appointment Step 2</figcaption></figure>
+      <figure id="sa5"><img src="images" alt="SA - Add Patient Medical History"><figcaption>SA - Add Patient Medical History</figcaption></figure>
+      <figure id="sa6"><img src="images" alt="SA - Update Patient Appointment Details"><figcaption>SA - Update Patient Appointment Details</figcaption></figure>
+      <figure id="test"><img src="images" alt="Test"><figcaption>Test</figcaption></figure>
+      <figure id="billing"><img src="images" alt="SA - Billing Details"><figcaption>SA - Billing Details</figcaption></figure>
+      <figure id="doc1"><img src="images" alt="Doctor - Add Patient"><figcaption>Doctor - Add Patient</figcaption></figure>
+      <figure id="summary"><img src="images" alt="Patient Summary"><figcaption>Patient Summary</figcaption></figure>
+      <figure id="doc2"><img src="images" alt="Doctor Add Patient Details"><figcaption>Doctor Add Patient Details</figcaption></figure>
+      <figure id="doc3"><img src="images" alt="Doctor Add Existing Patient Appointment"><figcaption>Doctor Add Existing Patient Appointment</figcaption></figure>
+      <figure id="doc4"><img src="images" alt="Doctor Add New Patient Appointment"><figcaption>Doctor Add New Patient Appointment</figcaption></figure>
+      <figure id="patient1"><img src="images" alt="Patient Update Personal Details"><figcaption>Patient Update Personal Details</figcaption></figure>
+      <figure id="patient2"><img src="images" alt="Patient Encounter Details"><figcaption>Patient Encounter Details</figcaption></figure>
+      <figure id="sa7"><img src="images" alt="SA - Practitioners List"><figcaption>SA - Practitioners List</figcaption></figure>
+      <figure id="patient3"><img src="images" alt="Patient Appointment History"><figcaption>Patient Appointment History</figcaption></figure>
+      <figure id="sa8"><img src="images" alt="SA - Dashboard"><figcaption>SA - Dashboard</figcaption></figure>
+      <figure id="patient4"><img src="images" alt="Patient Medical History"><figcaption>Patient Medical History</figcaption></figure>
+      <figure id="test2"><img src="images" alt="Test Page"><figcaption>Test Page</figcaption></figure>
+      <figure id="apptest"><img src="images" alt="Test Appointment"><figcaption>Test Appointment</figcaption></figure>
+      <figure id="patient5"><img src="images" alt="Patient Book Appointment"><figcaption>Patient Book Appointment</figcaption></figure>
+      <figure id="patient6"><img src="images" alt="Patient Dashboard"><figcaption>Patient Dashboard</figcaption></figure>
+      <figure id="doc5"><img src="images" alt="Doctor - Patient Consultation"><figcaption>Doctor - Patient Consultation</figcaption></figure>
+      <figure id="doc6"><img src="images" alt="Doctor - Appointments"><figcaption>Doctor - Appointments</figcaption></figure>
     </div>
   </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <span onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script src="/script.js"></script>
 </body>
 </html>
