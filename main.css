@@ -415,3 +415,144 @@ body {
 .zoom-btn:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
+
+/*  NEW Styles for Delete Button & Status Indicators     */
+
+/* Make the figure a positioning context for the delete button */
+.gallery figure {
+  position: relative;
+}
+
+/* Delete button on the top-right of the image card */
+.delete-image-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(220, 53, 69, 0.8); /* Red, slightly transparent */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 10;
+}
+
+/* Show the delete button on hover */
+.gallery figure:hover .delete-image-btn {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* --- Custom Checkbox Styles --- */
+.tasks .custom-checkbox {
+  position: relative;
+  padding-left: 30px; /* Space for the custom box */
+  cursor: pointer;
+  user-select: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+/* Hide the browser's default checkbox */
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox box */
+.custom-checkbox .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+/* On mouse-over, add a grey background color */
+.custom-checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.custom-checkbox .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* --- Sidebar Status Indicator Styles --- */
+.sidebar .nav-link-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-indicators {
+  display: flex;
+  gap: 4px;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* Style the checkmark inside the indicator */
+.status-indicator::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.status-indicator.frontend-complete {
+  background-color: #007bff; /* Blue for Frontend */
+}
+
+.status-indicator.backend-complete {
+  background-color: #dc3545; /* Red for Backend */
+}

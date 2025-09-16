@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-//setup and init
+// 1. SETUP & INITIALIZATION
 const VITE_db_URL = import.meta.env.VITE_db_URL;
 const VITE_db_ANON_KEY = import.meta.env.VITE_db_ANON_KEY;
 const supabase = createClient(VITE_db_URL, VITE_db_ANON_KEY);
@@ -15,7 +15,7 @@ const personColorInput = document.getElementById('person-color-input');
 
 // Modal Elements
 const addImageBtn = document.getElementById('add-image-btn');
-const addImageModal = document.getElementById('add-image-modal'); // Corrected name
+const addImageModal = document.getElementById('add-image-modal');
 const addImageForm = document.getElementById('add-image-form');
 const assignPersonModal = document.getElementById('assign-person-modal');
 let currentlyAssigningImageId = null;
@@ -25,15 +25,12 @@ const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const zoomInBtn = document.getElementById('zoom-in-btn');
 const zoomOutBtn = document.getElementById('zoom-out-btn');
-
 let scale = 1;
 let isPanning = false;
-let startX = 0;
-let startY = 0;
-let translateX = 0;
-let translateY = 0;
+let startX = 0, startY = 0;
+let translateX = 0, translateY = 0;
 
-//fech data from db
+// 2. DATA FETCHING FUNCTIONS
 async function fetchImages() {
   const { data, error } = await supabase.from('images').select('*').order('created_at');
   if (error) console.error('Error fetching images:', error);
@@ -51,9 +48,7 @@ async function fetchAssignments() {
     if (error) console.error('Error fetching assignments:', error);
     return data;
 }
-
-// ===================rendering functions====================================
-
+// 3. RENDERING FUNCTIONS (Building the HTML)
 function renderGallery(images, people, assignments) {
   gallery.innerHTML = '';
   sidebar.innerHTML = '<h2>Navigation</h2><hr/>';
@@ -67,14 +62,22 @@ function renderGallery(images, people, assignments) {
     const figure = document.createElement('figure');
     figure.id = image.id;
 
-    figure.innerHTML = `
-      <img src="${image.image_url}" alt="${image.caption}">
-      <figcaption>${image.caption}</figcaption>
-    `;
+    // Create all elements before appending to avoid overwriting issues
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-image-btn';
+    deleteBtn.innerHTML = '&times;';
+    deleteBtn.title = 'Delete Image';
+    deleteBtn.onclick = () => handleDeleteImage(image.id, image.image_url);
+
+    const img = document.createElement('img');
+    img.src = image.image_url;
+    img.alt = image.caption;
+
+    const figcaption = document.createElement('figcaption');
+    figcaption.textContent = image.caption;
 
     const assignedTagsDiv = document.createElement('div');
     assignedTagsDiv.className = 'assigned-tags';
-    
     const imageAssignments = assignments.filter(a => a.image_id === image.id);
     imageAssignments.forEach(assignment => {
       const person = people.find(p => p.id === assignment.person_id);
@@ -86,48 +89,75 @@ function renderGallery(images, people, assignments) {
         assignedTagsDiv.appendChild(tag);
       }
     });
-    figure.appendChild(assignedTagsDiv);
-
+    
     const tasksDiv = document.createElement('div');
     tasksDiv.className = 'tasks';
     tasksDiv.innerHTML = `
-      <label>
+      <label class="custom-checkbox">
         <input type="checkbox" class="task-checkbox" data-task="frontend_done" ${image.frontend_done ? 'checked' : ''}>
+        <span class="checkmark"></span>
         Front-end
       </label>
-      <label>
+      <label class="custom-checkbox">
         <input type="checkbox" class="task-checkbox" data-task="backend_done" ${image.backend_done ? 'checked' : ''}>
+        <span class="checkmark"></span>
         Back-end
       </label>
     `;
-    figure.appendChild(tasksDiv);
     
     const assignBtn = document.createElement('button');
     assignBtn.className = 'assign-button';
     assignBtn.textContent = '+ Assign Person';
     assignBtn.onclick = () => openAssignModal(image.id, image.caption, people);
+    
+    // Append all created elements in the correct order
+    figure.appendChild(deleteBtn);
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    figure.appendChild(assignedTagsDiv);
+    figure.appendChild(tasksDiv);
     figure.appendChild(assignBtn);
     
+    // Add event listeners for dynamic content
     tasksDiv.querySelectorAll('.task-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', () => handleTaskUpdate(image.id, checkbox.dataset.task, checkbox.checked));
     });
-
     assignedTagsDiv.querySelectorAll('.remove-assignment').forEach(btn => {
         btn.onclick = () => handleRemoveAssignment(image.id, btn.dataset.personId);
     });
 
-    const sidebarLink = document.createElement('a');
-    sidebarLink.href = `#${image.id}`;
-    sidebarLink.textContent = image.caption;
-    sidebar.appendChild(sidebarLink);
+    // Create and append the sidebar link with status indicators
+    const sidebarLinkContainer = document.createElement('a');
+    sidebarLinkContainer.href = `#${image.id}`;
+    sidebarLinkContainer.className = 'nav-link-container';
+    
+    const linkText = document.createElement('span');
+    linkText.textContent = image.caption;
+
+    const indicatorsDiv = document.createElement('div');
+    indicatorsDiv.className = 'status-indicators';
+    if (image.frontend_done) {
+        const feIndicator = document.createElement('span');
+        feIndicator.className = 'status-indicator frontend-complete';
+        feIndicator.title = 'Front-end complete';
+        indicatorsDiv.appendChild(feIndicator);
+    }
+    if (image.backend_done) {
+        const beIndicator = document.createElement('span');
+        beIndicator.className = 'status-indicator backend-complete';
+        beIndicator.title = 'Back-end complete';
+        indicatorsDiv.appendChild(beIndicator);
+    }
+    
+    sidebarLinkContainer.appendChild(linkText);
+    sidebarLinkContainer.appendChild(indicatorsDiv);
+    sidebar.appendChild(sidebarLinkContainer);
     
     gallery.appendChild(figure);
   });
 
-  // FIX: This function call was missing. We add it back here.
   addLightboxListeners();
-  
-  addHighlightListeners(); //Activate the highlight feature
+  addHighlightListeners();
 }
 
 function renderPeople(people) {
@@ -135,10 +165,8 @@ function renderPeople(people) {
     people.forEach(person => {
         const personTag = document.createElement('span');
         personTag.className = 'person-tag';
-        
-        personTag.innerHTML = `${person.name} <span class="delete-person" title="Delete person">&times;</span>`;
         personTag.style.backgroundColor = person.tag_color;
-
+        personTag.innerHTML = `${person.name} <span class="delete-person" title="Delete person">&times;</span>`;
         personTag.querySelector('.delete-person').onclick = (e) => {
             e.stopPropagation();
             if (confirm(`Are you sure you want to delete ${person.name}? This cannot be undone.`)) {
@@ -148,14 +176,27 @@ function renderPeople(people) {
         peopleTagsContainer.appendChild(personTag);
     });
 }
+// 4. DATA MANIPULATION & EVENT HANDLERS
+async function handleDeleteImage(imageId, imageUrl) {
+    if (!confirm('Are you sure you want to permanently delete this image?')) return;
+    const fileName = imageUrl.split('/').pop();
+    const [dbResult, storageResult] = await Promise.all([
+        supabase.from('images').delete().eq('id', imageId),
+        supabase.storage.from('images').remove([fileName])
+    ]);
+    if (dbResult.error || storageResult.error) {
+        console.error('Error deleting image:', dbResult.error || storageResult.error);
+        alert('Failed to delete image.');
+    } else {
+        initializeApp();
+    }
+}
 
-// =======================even handling and data operations================================
 async function handleAddPerson() {
   const name = personNameInput.value.trim();
   const color = personColorInput.value;
   if (!name) return;
-
-  const { data, error } = await supabase.from('people').insert({ name: name, tag_color: color }).select();
+  const { error } = await supabase.from('people').insert({ name, tag_color: color });
   if (error) {
     console.error('Error adding person:', error);
     alert('Failed to add person.');
@@ -164,6 +205,7 @@ async function handleAddPerson() {
     initializeApp();
   }
 }
+
 async function handleDeletePerson(personId) {
     const { error } = await supabase.from('people').delete().eq('id', personId);
     if (error) {
@@ -173,6 +215,7 @@ async function handleDeletePerson(personId) {
         initializeApp();
     }
 }
+
 async function handleAssignPerson(personId) {
     if (!currentlyAssigningImageId) return;
     const { error } = await supabase.from('assignments').insert({
@@ -181,20 +224,16 @@ async function handleAssignPerson(personId) {
     });
     if (error) {
         console.error('Error assigning person:', error);
-        if (error.code === '23505') {
-          alert('This person is already assigned to this task.');
-        } else {
-          alert('Failed to assign person.');
-        }
+        if (error.code === '23505') alert('This person is already assigned to this task.');
+        else alert('Failed to assign person.');
     } else {
         closeAllModals();
         initializeApp();
     }
 }
+
 async function handleRemoveAssignment(imageId, personId) {
-    const { error } = await supabase.from('assignments').delete()
-        .eq('image_id', imageId)
-        .eq('person_id', personId);
+    const { error } = await supabase.from('assignments').delete().match({ image_id: imageId, person_id: personId });
     if (error) {
         console.error('Error removing assignment:', error);
         alert('Failed to remove assignment.');
@@ -202,44 +241,37 @@ async function handleRemoveAssignment(imageId, personId) {
         initializeApp();
     }
 }
+
 async function handleTaskUpdate(imageId, taskColumn, isChecked) {
-  const { error } = await supabase
-    .from('images')
-    .update({ [taskColumn]: isChecked })
-    .eq('id', imageId);
-    
+  const { error } = await supabase.from('images').update({ [taskColumn]: isChecked }).eq('id', imageId);
   if (error) {
     console.error('Error updating task:', error);
     alert('Could not save task status.');
+  } else {
+    initializeApp(); // Refresh UI to show sidebar changes instantly
   }
 }
+
 async function handleImageUpload(event) {
     event.preventDefault();
     const caption = document.getElementById('image-caption-input').value.trim();
     const imageFile = document.getElementById('image-file-input').files[0];
-
     if (!caption || !imageFile) {
         alert('Please provide a caption and select an image file.');
         return;
     }
-
     const fileName = `${Date.now()}-${imageFile.name}`;
     const { error: uploadError } = await supabase.storage.from('images').upload(fileName, imageFile);
-
     if (uploadError) {
         console.error('Error uploading image:', uploadError);
         alert('Failed to upload image.');
         return;
     }
-
     const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
-    const publicURL = urlData.publicUrl;
-
     const { error: insertError } = await supabase.from('images').insert({
         caption: caption,
-        image_url: publicURL
+        image_url: urlData.publicUrl
     });
-    
     if (insertError) {
         console.error('Error saving image data:', insertError);
         alert('Failed to save image details.');
@@ -249,14 +281,12 @@ async function handleImageUpload(event) {
         initializeApp();
     }
 }
-
-// =====================util and init==================================
+// 5. UTILITY & UI FUNCTIONS
 function openAssignModal(imageId, caption, people) {
     currentlyAssigningImageId = imageId;
     document.getElementById('assign-modal-caption').textContent = `"${caption}"`;
     const listDiv = document.getElementById('assignable-people-list');
     listDiv.innerHTML = '';
-
     people.forEach(person => {
         const btn = document.createElement('button');
         btn.className = 'assignable-person';
@@ -265,13 +295,14 @@ function openAssignModal(imageId, caption, people) {
         btn.onclick = () => handleAssignPerson(person.id);
         listDiv.appendChild(btn);
     });
-    
     assignPersonModal.style.display = 'block';
 }
+
 function closeAllModals() {
     addImageModal.style.display = 'none';
     assignPersonModal.style.display = 'none';
 }
+
 function addLightboxListeners() {
     gallery.addEventListener('click', (e) => {
         const img = e.target.closest('figure img');
@@ -281,6 +312,7 @@ function addLightboxListeners() {
         }
     });
 }
+
 function resetZoom() {
     scale = 1;
     translateX = 0;
@@ -288,32 +320,31 @@ function resetZoom() {
     isPanning = false;
     updateImageTransform();
 }
+
 function updateImageTransform() {
     lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 }
+
 function closeLightbox() {
   lightbox.style.display = 'none';
   resetZoom();
 }
+
 function handleZoom(event) {
     event.preventDefault();
     const zoomSpeed = 0.1;
     const oldScale = scale;
-
-    if (event.deltaY < 0) { scale += zoomSpeed; } 
-    else { scale -= zoomSpeed; }
-    
+    if (event.deltaY < 0) scale += zoomSpeed; 
+    else scale -= zoomSpeed;
     scale = Math.min(Math.max(0.5, scale), 4);
-    
     const rect = lightboxImg.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
-    
     translateX = mouseX - (mouseX - translateX) * (scale / oldScale);
     translateY = mouseY - (mouseY - translateY) * (scale / oldScale);
-
     updateImageTransform();
 }
+
 function addHighlightListeners() {
   const links = document.querySelectorAll(".sidebar a");
   links.forEach(link => {
@@ -330,17 +361,18 @@ function addHighlightListeners() {
     });
   });
 }
+
 async function initializeApp() {
   const [images, people, assignments] = await Promise.all([
     fetchImages(),
     fetchPeople(),
     fetchAssignments()
   ]);
-  
   renderGallery(images, people, assignments);
   renderPeople(people);
 }
-// ========================event listeners===============================
+
+// 6. GLOBAL EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', initializeApp);
 
 addPersonBtn.addEventListener('click', handleAddPerson);
