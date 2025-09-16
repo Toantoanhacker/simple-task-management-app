@@ -1,18 +1,12 @@
-// read the variables from env provided loclly or host service conffigurations
-// script.js
-
-// sigma base db import work plzz
 import { createClient } from '@supabase/supabase-js';
 
-// read the variables from env provided loclly or host service conffigurations
-const db_URL = import.meta.env.VITE_db_URL;
-const db_ANON_KEY = import.meta.env.VITE_db_ANON_KEY;
+//setup and init
+const VITE_db_URL = import.meta.env.VITE_db_URL;
+const VITE_db_ANON_KEY = import.meta.env.VITE_db_ANON_KEY;
 
-// init
-const supabase = createClient(db_URL, db_ANON_KEY);
+const supabase = createClient(VITE_db_URL, VITE_db_ANON_KEY);
 
-
-// doom
+// DOM Elements
 const gallery = document.getElementById('gallery');
 const sidebar = document.querySelector('.sidebar');
 const personNameInput = document.getElementById('person-name-input');
@@ -25,23 +19,20 @@ const modal = document.getElementById('add-image-modal');
 const closeModalBtn = document.querySelector('.close-modal');
 const addImageForm = document.getElementById('add-image-form');
 
-// ===================fetch functions====================================
+//fech data from db
 
-// Fetch all images from the 'images' table
 async function fetchImages() {
   const { data, error } = await supabase.from('images').select('*').order('created_at');
   if (error) console.error('Error fetching images:', error);
   return data;
 }
 
-// Fetch all people from the 'people' table
 async function fetchPeople() {
     const { data, error } = await supabase.from('people').select('*');
     if (error) console.error('Error fetching people:', error);
     return data;
 }
 
-// Fetch all assignments (linking images and people)
 async function fetchAssignments() {
     const { data, error } = await supabase.from('assignments').select('image_id, person_id');
     if (error) console.error('Error fetching assignments:', error);
@@ -50,28 +41,24 @@ async function fetchAssignments() {
 
 // ===================rendering functions====================================
 
-// Create the HTML for the entire gallery
 function renderGallery(images, people, assignments) {
-  gallery.innerHTML = ''; // Clear existing gallery
-  sidebar.innerHTML = '<h2>Navigation</h2><hr/>'; // Clear and reset sidebar
+  gallery.innerHTML = '';
+  sidebar.innerHTML = '<h2>Navigation</h2><hr/>';
 
   if (!images || images.length === 0) {
-    gallery.innerHTML = '<p>No images yet. Add one with the "+" button!</p>';
+    gallery.innerHTML = '<p style="color: white; font-size: 1.2em;">No images yet. Add one with the "+" button!</p>';
     return;
   }
     
   images.forEach(image => {
-    // Create the main figure element
     const figure = document.createElement('figure');
-    figure.id = image.id; // Use database ID for the element ID
+    figure.id = image.id;
 
-    // Create the image and caption
     figure.innerHTML = `
       <img src="${image.image_url}" alt="${image.caption}">
       <figcaption>${image.caption}</figcaption>
     `;
 
-    // Create the task management section (checkboxes)
     const tasksDiv = document.createElement('div');
     tasksDiv.className = 'tasks';
     tasksDiv.innerHTML = `
@@ -86,12 +73,10 @@ function renderGallery(images, people, assignments) {
     `;
     figure.appendChild(tasksDiv);
     
-    // Add event listeners for the checkboxes
     tasksDiv.querySelectorAll('.task-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', () => handleTaskUpdate(image.id, checkbox.dataset.task, checkbox.checked));
     });
 
-    // Create sidebar link for this image
     const sidebarLink = document.createElement('a');
     sidebarLink.href = `#${image.id}`;
     sidebarLink.textContent = image.caption;
@@ -100,13 +85,12 @@ function renderGallery(images, people, assignments) {
     gallery.appendChild(figure);
   });
 
-  // Re-add lightbox functionality to new images
   addLightboxListeners();
+  addHighlightListeners(); //Activate the highlight feature
 }
 
-// Render the tags for people at the top
 function renderPeople(people) {
-    peopleTagsContainer.innerHTML = ''; // Clear existing tags
+    peopleTagsContainer.innerHTML = '';
     people.forEach(person => {
         const personTag = document.createElement('span');
         personTag.className = 'person-tag';
@@ -116,10 +100,8 @@ function renderPeople(people) {
     });
 }
 
+// =======================even handling and data operations================================
 
-// =================even handler and data operations======================================
-
-// Handles adding a new person
 async function handleAddPerson() {
   const name = personNameInput.value.trim();
   if (!name) return;
@@ -130,11 +112,10 @@ async function handleAddPerson() {
     alert('Failed to add person.');
   } else {
     personNameInput.value = '';
-    initializeApp(); // Refresh the whole app state
+    initializeApp();
   }
 }
 
-// Handles updating a task checkbox
 async function handleTaskUpdate(imageId, taskColumn, isChecked) {
   const { error } = await supabase
     .from('images')
@@ -147,7 +128,6 @@ async function handleTaskUpdate(imageId, taskColumn, isChecked) {
   }
 }
 
-// Handles the form submission for a new image
 async function handleImageUpload(event) {
     event.preventDefault();
     const caption = document.getElementById('image-caption-input').value.trim();
@@ -158,7 +138,6 @@ async function handleImageUpload(event) {
         return;
     }
 
-    // 1. Upload the file to Supabase Storage
     const fileName = `${Date.now()}-${imageFile.name}`;
     const { error: uploadError } = await supabase.storage.from('images').upload(fileName, imageFile);
 
@@ -168,11 +147,9 @@ async function handleImageUpload(event) {
         return;
     }
 
-    // 2. Get the public URL of the uploaded file
     const { data: urlData } = supabase.storage.from('images').getPublicUrl(fileName);
     const publicURL = urlData.publicUrl;
 
-    // 3. Insert the new image record into the 'images' table
     const { error: insertError } = await supabase.from('images').insert({
         caption: caption,
         image_url: publicURL
@@ -184,14 +161,12 @@ async function handleImageUpload(event) {
     } else {
         modal.style.display = 'none';
         addImageForm.reset();
-        initializeApp(); // Refresh the app to show the new image
+        initializeApp();
     }
 }
 
+// =====================util and init==================================
 
-// =========================util==============================
-
-// Lightbox functionality
 function addLightboxListeners() {
     const figures = document.querySelectorAll('.gallery figure img');
     const lightbox = document.getElementById('lightbox');
@@ -210,7 +185,37 @@ function closeLightbox() {
   document.getElementById('lightbox').style.display = 'none';
 }
 
-// Main function to start the application
+// NEW: Function to add highlight listeners from the original site
+function addHighlightListeners() {
+  const links = document.querySelectorAll(".sidebar a");
+  const figures = document.querySelectorAll(".gallery figure");
+
+  links.forEach(link => {
+    link.addEventListener("click", (event) => {
+      // Prevent default jump, smooth scroll instead
+      event.preventDefault();
+      
+      figures.forEach(fig => fig.classList.remove("highlight"));
+
+      const targetId = link.getAttribute("href").substring(1);
+      const targetFigure = document.getElementById(targetId);
+
+      if (targetFigure) {
+        // Scroll to the figure
+        targetFigure.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Highlight it
+        targetFigure.classList.add("highlight");
+
+        // Remove highlight after 3 seconds
+        setTimeout(() => {
+          targetFigure.classList.remove("highlight");
+        }, 3000);
+      }
+    });
+  });
+}
+
 async function initializeApp() {
   const [images, people, assignments] = await Promise.all([
     fetchImages(),
@@ -222,15 +227,12 @@ async function initializeApp() {
   renderPeople(people);
 }
 
-// ========================even listeners===============================
+// ========================event listeners===============================
 
-// Initial load
 document.addEventListener('DOMContentLoaded', initializeApp);
 
-// Listen for clicks to add a person
 addPersonBtn.addEventListener('click', handleAddPerson);
 
-// Modal listeners
 addImageBtn.addEventListener('click', () => modal.style.display = 'block');
 closeModalBtn.addEventListener('click', () => modal.style.display = 'none');
 window.addEventListener('click', (e) => {
@@ -238,7 +240,6 @@ window.addEventListener('click', (e) => {
 });
 addImageForm.addEventListener('submit', handleImageUpload);
 
-// Global lightbox listeners
 document.getElementById('lightbox').addEventListener('click', (e) => {
     if (e.target === document.getElementById('lightbox')) closeLightbox();
 });

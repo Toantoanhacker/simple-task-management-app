@@ -15,10 +15,15 @@
 ---
 
 ## Logs
+### Back-end version snapshot2 Sep 16 2025 at 6:58PM
+- since the backend styling looks sh*t, merge the previous front end version
+- fix grid view mode
+
 ### Back-end version snapshot1 Sep 16 2025 at 6:28PM
+- successfuly connected to postgres
 - moving to a more modern version to import lib for db
 - config policies for the table person, images, assignments for public use
-- config the storage policies allow connect and view
+- config the storage policies Allow public uploads and view
 
 ### Front-end version prototype done on Sep 16 2025 at 4:40PM
 - fix various bug and display issues
