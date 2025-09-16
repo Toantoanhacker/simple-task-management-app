@@ -1,10 +1,12 @@
 
 
-# **Hệ Thống Hồ Sơ Bệnh Án Điện Tử ClinicSys**
+# **App lập kế hoạch thiết kế app cho nhóm 3**
+
+**Các chức năng chính:**
 
 > **File images cho UI của project:** chi tiết hình ảnh cho UI của project
 
-> **Công nghệ sử dụng:** Vibe coding
+> **Công nghệ sử dụng:** Vibe coding & Half Human Coding
 
 ---
 
