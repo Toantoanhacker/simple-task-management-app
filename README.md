@@ -13,3 +13,10 @@
 * Template source: **[Full EMR (Electronic Medical Records)](https://drapcode.com/templates/electronic-medical-records-emr)**
 
 ---
+
+## Logs
+
+### Front-end version prototype done on Sep 16 2025 at 4:40PM
+- fix various bug and display issues
+- populate the image hard-coded into the html file
+- ready for the next phase with the completed front end stuff
