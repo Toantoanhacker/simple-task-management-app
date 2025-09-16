@@ -1,7 +1,9 @@
-const db_URL = ''; 
-const db_ANON_KEY = '';
+// read the variables from env provided loclly or host service conffigurations
+const db_URL = import.meta.env.VITE_db_URL;
+const db_ANON_KEY = import.meta.env.VITE_db_ANON_KEY;
 
 const supabase = supabase.createClient(db_URL, db_ANON_KEY);
+
 
 // doom
 const gallery = document.getElementById('gallery');
