@@ -15,6 +15,10 @@
 ---
 
 ## Logs
+### Back-end version snapshot1 Sep 16 2025 at 6:28PM
+- moving to a more modern version to import lib for db
+- config policies for the table person, images, assignments for public use
+- config the storage policies allow connect and view
 
 ### Front-end version prototype done on Sep 16 2025 at 4:40PM
 - fix various bug and display issues
