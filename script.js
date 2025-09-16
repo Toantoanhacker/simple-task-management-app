@@ -1,8 +1,15 @@
 // read the variables from env provided loclly or host service conffigurations
+// script.js
+
+// sigma base db import work plzz
+import { createClient } from '@supabase/supabase-js';
+
+// read the variables from env provided loclly or host service conffigurations
 const db_URL = import.meta.env.VITE_db_URL;
 const db_ANON_KEY = import.meta.env.VITE_db_ANON_KEY;
 
-const supabase = supabase.createClient(db_URL, db_ANON_KEY);
+// init
+const supabase = createClient(db_URL, db_ANON_KEY);
 
 
 // doom
