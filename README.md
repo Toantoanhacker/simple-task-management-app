@@ -6,7 +6,7 @@
 
 > **File images cho UI của project:** chi tiết hình ảnh cho UI của project
 
-> **Công nghệ sử dụng:** Vibe coding & Half Human Coding
+> **Công nghệ sử dụng:** Vibe coding & Half Human Coding and debuging AI code
 
 ---
 
