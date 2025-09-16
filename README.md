@@ -8,6 +8,6 @@
 
 ---
 
-* Thư mục drive: **[Full EMR (Electronic Medical Records)](https://drapcode.com/templates/electronic-medical-records-emr)**
+* Template source: **[Full EMR (Electronic Medical Records)](https://drapcode.com/templates/electronic-medical-records-emr)**
 
 ---
