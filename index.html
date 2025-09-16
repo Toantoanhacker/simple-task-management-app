@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Templates Preview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery figure {
+      margin: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .gallery figure:hover {
+      transform: scale(1.02);
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .gallery figcaption {
+      padding: 10px;
+      font-size: 14px;
+      color: #555;
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>UI Templates Gallery</h1>
+  <div class="gallery">
+    <figure>
+      <img src="img/a.png" alt="Login Page Template">
+      <figcaption>required pages</figcaption>
+    </figure>
+    <figure>
+      <img src="img/Screenshot 2025-09-16 091839.png" alt="Dashboard Template">
+      <figcaption>404 page</figcaption>
+    </figure>
+    <figure>
+      <img src="images/template3.png" alt="E-commerce Product Page">
+      <figcaption>E-commerce Product Page</figcaption>
+    </figure>
+    <figure>
+      <img src="images/template4.png" alt="Profile Page Template">
+      <figcaption>Profile Page Template</figcaption>
+    </figure>
+    <!-- Add more images as needed -->
+  </div>
+</body>
+</html>
