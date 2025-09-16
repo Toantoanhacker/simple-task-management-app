@@ -281,3 +281,137 @@ body {
   color: white;
   cursor: pointer;
 }
+/* NEW Styles for Person Colors and Assignments         */
+
+/* Adjust the add person form for the color picker */
+.add-person-form input[type="color"] {
+  min-width: 40px;
+  height: 40px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* "Delete" button on the main person tags */
+.person-tag .delete-person {
+  margin-left: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.person-tag .delete-person:hover {
+  opacity: 1;
+}
+
+/* Container for tags assigned to an image */
+.assigned-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 15px;
+  background: #fdfdfd;
+}
+
+/* Small tags displayed on an image card */
+.assigned-tag {
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+/* "Delete" button on an assigned tag */
+.assigned-tag .remove-assignment {
+  margin-left: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* "Assign Person" button on the image card */
+.assign-button {
+  display: block;
+  width: calc(100% - 30px);
+  margin: 10px 15px;
+  padding: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px dashed #007bff;
+  color: #007bff;
+  background: transparent;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+.assign-button:hover {
+  background: #007bff;
+  color: white;
+}
+
+/* List of people inside the assignment modal */
+#assignable-people-list {
+  margin-top: 20px;
+}
+
+.assignable-person {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: #f8f9fa;
+  transition: background-color 0.2s;
+}
+.assignable-person:hover {
+  background-color: #e9ecef;
+}
+
+
+/* Styles for Lightbox Zoom and Pan                 */
+
+
+/* Make sure the image transitions smoothly */
+.lightbox img {
+  transition: transform 0.2s ease-out;
+  cursor: grab; /* Show that the image is interactive */
+}
+
+.lightbox img:active {
+  cursor: grabbing; /* Show when the user is dragging */
+}
+
+/* Container for the zoom buttons */
+.lightbox-controls {
+  position: absolute;
+  top: 20px;
+  right: 100px; /* Position next to the close button */
+  z-index: 3001;
+  display: flex;
+  gap: 10px;
+}
+
+.zoom-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 40px; /* Center the text vertically */
+}
+
+.zoom-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
