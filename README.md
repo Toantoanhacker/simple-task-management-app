@@ -2,7 +2,7 @@
 
 # **Hệ Thống Hồ Sơ Bệnh Án Điện Tử ClinicSys**
 
-> **File images cho UI của project:** chi tiết hình ảnh cho 
+> **File images cho UI của project:** chi tiết hình ảnh cho UI của project
 
 > **Công nghệ sử dụng:** Vibe coding
 
