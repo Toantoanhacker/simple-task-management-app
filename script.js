@@ -1,7 +1,7 @@
 const db_URL = ''; 
-const db_KEY = '';
+const db_ANON_KEY = '';
 
-const supabase = supabase.createClient(db_URL, db_KEY);
+const supabase = supabase.createClient(db_URL, db_ANON_KEY);
 
 // doom
 const gallery = document.getElementById('gallery');
