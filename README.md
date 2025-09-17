@@ -16,9 +16,13 @@
 
 ## Logs
 
+### Improved image upload patch 1.0.1 Sep 17 2025 2:19PM
+- set default title value as the original image name
+
+
 ---
 
-### Back-end version RELEASE 1.0 Sep 16 2025 10:27PM
+### Back-end version RELEASE 1.0.0 Sep 16 2025 10:27PM
 - add synch checkbox for fun
 - add option to delte the image if needed
 - fixed the delete function not work

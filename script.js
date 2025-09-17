@@ -20,6 +20,10 @@ const addImageForm = document.getElementById('add-image-form');
 const assignPersonModal = document.getElementById('assign-person-modal');
 let currentlyAssigningImageId = null;
 
+// NEW: Get direct references to the form inputs for the new feature
+const imageCaptionInput = document.getElementById('image-caption-input');
+const imageFileInput = document.getElementById('image-file-input');
+
 // Lightbox and Zoom state variables
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
@@ -254,8 +258,10 @@ async function handleTaskUpdate(imageId, taskColumn, isChecked) {
 
 async function handleImageUpload(event) {
     event.preventDefault();
-    const caption = document.getElementById('image-caption-input').value.trim();
-    const imageFile = document.getElementById('image-file-input').files[0];
+    // Now we can use the variables defined at the top
+    const caption = imageCaptionInput.value.trim();
+    const imageFile = imageFileInput.files[0];
+    
     if (!caption || !imageFile) {
         alert('Please provide a caption and select an image file.');
         return;
@@ -281,6 +287,7 @@ async function handleImageUpload(event) {
         initializeApp();
     }
 }
+
 // 5. UTILITY & UI FUNCTIONS
 function openAssignModal(imageId, caption, people) {
     currentlyAssigningImageId = imageId;
@@ -378,6 +385,26 @@ document.addEventListener('DOMContentLoaded', initializeApp);
 addPersonBtn.addEventListener('click', handleAddPerson);
 addImageForm.addEventListener('submit', handleImageUpload);
 addImageBtn.addEventListener('click', () => addImageModal.style.display = 'block');
+
+// NEW: Event listener to auto-fill the caption from the filename
+imageFileInput.addEventListener('change', () => {
+  // Check if the user has selected a file
+  if (imageFileInput.files.length > 0) {
+    const file = imageFileInput.files[0];
+    const fileName = file.name;
+
+    // Find the last dot in the filename
+    const lastDotIndex = fileName.lastIndexOf('.');
+    
+    // If a dot is found, get the name without the extension.
+    // Otherwise, use the full filename.
+    const captionText = (lastDotIndex !== -1) ? fileName.substring(0, lastDotIndex) : fileName;
+    
+    // Set the value of the caption input field
+    imageCaptionInput.value = captionText;
+  }
+});
+
 
 // Modal closing listeners
 document.querySelectorAll('.close-modal').forEach(btn => btn.onclick = closeAllModals);
