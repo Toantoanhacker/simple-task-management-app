@@ -77,8 +77,12 @@ function renderGallery(images, people, assignments) {
     img.src = image.image_url;
     img.alt = image.caption;
 
+
+// editable figcaption
     const figcaption = document.createElement('figcaption');
     figcaption.textContent = image.caption;
+    figcaption.contentEditable = true; // This makes the element directly editable in the browser
+    figcaption.addEventListener('blur', () => handleCaptionUpdate(image.id, figcaption.textContent)); // Save on blur (when user clicks away)
 
     const assignedTagsDiv = document.createElement('div');
     assignedTagsDiv.className = 'assigned-tags';
@@ -108,6 +112,35 @@ function renderGallery(images, people, assignments) {
         Back-end
       </label>
     `;
+
+        // ✨ NEW: Create the elements for the notes feature
+    const notesToggleBtn = document.createElement('button');
+    notesToggleBtn.className = 'notes-toggle-btn';
+    notesToggleBtn.textContent = 'Show/Hide Notes';
+
+      if (image.notes && image.notes.trim() !== '') {
+        notesToggleBtn.classList.add('has-notes');
+    }
+
+    const notesSection = document.createElement('div');
+    notesSection.className = 'notes-section';
+
+    const notesContent = document.createElement('div');
+    notesContent.className = 'notes-content';
+    notesContent.contentEditable = true;
+    notesContent.textContent = image.notes || ''; // Display existing notes or empty string
+    notesContent.addEventListener('blur', () => handleNotesUpdate(image.id, notesContent.textContent)); // Save on blur
+    
+    notesSection.appendChild(notesContent);
+
+    // Toggle visibility of the notes section
+    notesToggleBtn.onclick = () => {
+        const isHidden = notesSection.style.display === 'none' || !notesSection.style.display;
+        notesSection.style.display = isHidden ? 'block' : 'none';
+        if (isHidden) {
+            notesContent.focus(); // Auto-focus when showing
+        }
+    };
     
     const assignBtn = document.createElement('button');
     assignBtn.className = 'assign-button';
@@ -120,6 +153,8 @@ function renderGallery(images, people, assignments) {
     figure.appendChild(figcaption);
     figure.appendChild(assignedTagsDiv);
     figure.appendChild(tasksDiv);
+    figure.appendChild(notesToggleBtn); // Add the notes toggle button
+    figure.appendChild(notesSection);   // Add the (initially hidden) notes section
     figure.appendChild(assignBtn);
     
     // Add event listeners for dynamic content
@@ -136,6 +171,8 @@ function renderGallery(images, people, assignments) {
     sidebarLinkContainer.className = 'nav-link-container';
     
     const linkText = document.createElement('span');
+    // NEW: Add a class to the link text so CSS can target it
+    linkText.className = 'nav-link-text';
     linkText.textContent = image.caption;
 
     const indicatorsDiv = document.createElement('div');
@@ -180,7 +217,79 @@ function renderPeople(people) {
         peopleTagsContainer.appendChild(personTag);
     });
 }
-// 4. DATA MANIPULATION & EVENT HANDLERS
+// 4. DATA MANIPULATION & EVENT HANDLERS\
+
+// NEW: Function to handle saving notes updates
+async function handleNotesUpdate(imageId, newNotes) {
+    const { error } = await supabase.from('images').update({ notes: newNotes.trim() }).eq('id', imageId);
+
+    if (error) {
+        console.error('Error updating notes:', error);
+        alert('Failed to save notes.');
+    }
+}
+
+//  NEW: Function to handle in-place caption updates
+async function handleCaptionUpdate(imageId, newCaption) {
+    const trimmedCaption = newCaption.trim();
+    if (!trimmedCaption) {
+        alert("Caption cannot be empty.");
+        initializeApp(); // Reload to revert to the old caption
+        return;
+    }
+
+    const { error } = await supabase.from('images').update({ caption: trimmedCaption }).eq('id', imageId);
+
+    if (error) {
+        console.error('Error updating caption:', error);
+        alert('Failed to save caption.');
+    } else {
+        // Sync the sidebar link text without a full reload
+        const sidebarLinkText = document.querySelector(`a[href="#${imageId}"] .nav-link-text`);
+        if (sidebarLinkText) {
+            sidebarLinkText.textContent = trimmedCaption;
+        }
+    }
+}
+
+//  NEW: Function dedicated to handling multi-file uploads
+async function handleMultipleImageUpload(files) {
+    alert(`Starting upload of ${files.length} images. This may take a moment.`);
+    
+    // Create an array of upload promises
+    const uploadPromises = Array.from(files).map(async (file) => {
+        const fileName = file.name;
+        const lastDotIndex = fileName.lastIndexOf('.');
+        const captionText = (lastDotIndex !== -1) ? fileName.substring(0, lastDotIndex) : fileName;
+        
+        const uniqueFileName = `${Date.now()}-${fileName}`;
+
+        // 1. Upload file
+        const { error: uploadError } = await supabase.storage.from('images').upload(uniqueFileName, file);
+        if (uploadError) throw new Error(`Upload failed for ${fileName}: ${uploadError.message}`);
+
+        // 2. Get URL
+        const { data: urlData } = supabase.storage.from('images').getPublicUrl(uniqueFileName);
+
+        // 3. Insert into database
+        const { error: insertError } = await supabase.from('images').insert({
+            caption: captionText,
+            image_url: urlData.publicUrl
+        });
+        if (insertError) throw new Error(`Database insert failed for ${fileName}: ${insertError.message}`);
+    });
+
+    try {
+        await Promise.all(uploadPromises);
+        alert('All images uploaded successfully!');
+    } catch (error) {
+        console.error("One or more uploads failed:", error);
+        alert(`An error occurred during the multi-upload. Some files may not have been saved. Check the console for details.`);
+    } finally {
+        initializeApp(); // Refresh the gallery with all new images
+    }
+}
+
 async function handleDeleteImage(imageId, imageUrl) {
     if (!confirm('Are you sure you want to permanently delete this image?')) return;
     const fileName = imageUrl.split('/').pop();
@@ -258,10 +367,10 @@ async function handleTaskUpdate(imageId, taskColumn, isChecked) {
 
 async function handleImageUpload(event) {
     event.preventDefault();
-    // Now we can use the variables defined at the top
     const caption = imageCaptionInput.value.trim();
     const imageFile = imageFileInput.files[0];
     
+    // This function now exclusively handles the SINGLE file upload case
     if (!caption || !imageFile) {
         alert('Please provide a caption and select an image file.');
         return;
@@ -386,23 +495,23 @@ addPersonBtn.addEventListener('click', handleAddPerson);
 addImageForm.addEventListener('submit', handleImageUpload);
 addImageBtn.addEventListener('click', () => addImageModal.style.display = 'block');
 
-// NEW: Event listener to auto-fill the caption from the filename
+// MODIFIED: The file input listener now handles both single and multiple files
 imageFileInput.addEventListener('change', () => {
-  // Check if the user has selected a file
-  if (imageFileInput.files.length > 0) {
-    const file = imageFileInput.files[0];
-    const fileName = file.name;
+    const files = imageFileInput.files;
 
-    // Find the last dot in the filename
-    const lastDotIndex = fileName.lastIndexOf('.');
-    
-    // If a dot is found, get the name without the extension.
-    // Otherwise, use the full filename.
-    const captionText = (lastDotIndex !== -1) ? fileName.substring(0, lastDotIndex) : fileName;
-    
-    // Set the value of the caption input field
-    imageCaptionInput.value = captionText;
-  }
+    if (files.length === 1) {
+        // SINGLE FILE: Show modal and pre-fill caption
+        const file = files[0];
+        const fileName = file.name;
+        const lastDotIndex = fileName.lastIndexOf('.');
+        const captionText = (lastDotIndex !== -1) ? fileName.substring(0, lastDotIndex) : fileName;
+        imageCaptionInput.value = captionText;
+        addImageModal.style.display = 'block'; // Show the modal for editing
+    } else if (files.length > 1) {
+        // MULTIPLE FILES: Skip modal and upload immediately
+        handleMultipleImageUpload(files);
+        addImageForm.reset(); // Clear the file input
+    }
 });
 
 

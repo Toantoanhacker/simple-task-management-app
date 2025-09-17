@@ -56,16 +56,17 @@
       <span class="close-modal">&times;</span>
       <h2>Add New UI Template</h2>
       
-      <!-- FIX: Add these form elements back inside the form tag -->
-      <form id="add-image-form">
-        <label for="image-caption-input">Caption:</label>
-        <input type="text" id="image-caption-input" required>
-        
-        <label for="image-file-input">Image File:</label>
-        <input type="file" id="image-file-input" accept="image/*" required>
-        
-        <button type="submit">Upload & Save</button>
-      </form>
+<!-- Inside the #add-image-modal -->
+<form id="add-image-form">
+  <label for="image-caption-input">Caption:</label>
+  <input type="text" id="image-caption-input" required>
+  
+  <label for="image-file-input">Image File:</label>
+  <!--  MODIFIED: Add the 'multiple' attribute -->
+  <input type="file" id="image-file-input" accept="image/*" required multiple>
+  
+  <button type="submit">Upload & Save</button>
+</form>
 
     </div>
   </div>

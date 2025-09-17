@@ -16,6 +16,13 @@
 
 ## Logs
 
+### More flexible uploads & Notes section patch 1.0.2 Sep 17 2025 7:21PM
+- add multiple image uploads
+- user can now edit the title of the image by clicking on the title
+- add notes section
+- fix side navigation bar text overflow
+- add available note's button status to green
+
 ### Improved image upload patch 1.0.1 Sep 17 2025 2:19PM
 - set default title value as the original image name
 
