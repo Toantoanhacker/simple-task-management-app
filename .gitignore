@@ -1,2 +1,37 @@
+# Environment & Node.js
 .env
-node_modules
+node_modules/
+
+# Build directories
+/build/
+*/build/
+dist/
+*/dist/
+
+# NetBeans private project settings
+nbproject/
+
+# Compiled class files
+*.class
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE cache
+*.swp
+*.swo
+*.bak
+
+# NetBeans-specific backup files
+**/nbproject/Makefile-*.mk
+
+# Generated files
+gen/
+
+
+# Database file
+/src
