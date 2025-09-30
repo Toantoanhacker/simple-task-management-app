@@ -8,6 +8,7 @@ export const state = {
     allImages: [],
     allPeople: [],
     allAssignments: [],
+    selectedTags: [],
     currentlyAssigningImageId: null,
     lightbox: {
         scale: 1,
@@ -41,6 +42,11 @@ export const dom = {
     assignPersonModal: document.getElementById('assign-person-modal'),
     // search
     searchInput: document.getElementById('search-input'),
+    //search by tags
+    tagFilterContainer: document.getElementById('tag-filter-container'),
+    tagFilterBtn: document.getElementById('tag-filter-btn'),
+    tagFilterDropdown: document.getElementById('tag-filter-dropdown'),
+    tagFilterClearBtn: document.getElementById('tag-filter-clear-btn'),
     // Lightbox
     lightbox: document.getElementById('lightbox'),
     lightboxImg: document.getElementById('lightbox-img'),

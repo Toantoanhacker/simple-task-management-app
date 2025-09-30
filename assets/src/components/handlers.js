@@ -23,26 +23,50 @@ function normalizeText(str) {
         .toLowerCase()
         .trim();
 }
+/**
+ * Main filter function that combines both keyword and tag searches.
+ */
+function applyFilters() {
+    const searchTerm = normalizeText(dom.searchInput.value);
+    const selectedTagIds = state.selectedTags;
+
+    let filteredImages = state.allImages;
+
+    // 1. Filter by keyword first
+    if (searchTerm) {
+        filteredImages = filteredImages.filter(image => 
+            normalizeText(image.caption).includes(searchTerm)
+        );
+    }
+
+    // 2. Filter by selected tags
+    if (selectedTagIds.length > 0) {
+        filteredImages = filteredImages.filter(image => {
+            // Get all person IDs assigned to this image
+            const assignedIds = state.allAssignments
+                .filter(a => a.image_id === image.id)
+                .map(a => a.person_id);
+            
+            // Check if every selected tag is present in the assigned list
+            return selectedTagIds.every(tagId => assignedIds.includes(tagId));
+        });
+    }
+
+    renderGallery(filteredImages, state.allPeople, state.allAssignments);
+}
 
 /**
  * Filters and re-renders the gallery based on the search input value.
  */
 export function handleSearch() {
-    const searchTerm = normalizeText(dom.searchInput.value);
+    applyFilters();
+}
 
-    if (!searchTerm) {
-        // If search is empty, render all images
-        renderGallery(state.allImages, state.allPeople, state.allAssignments);
-        return;
-    }
-
-    const filteredImages = state.allImages.filter(image => {
-        const normalizedCaption = normalizeText(image.caption);
-        return normalizedCaption.includes(searchTerm);
-    });
-
-    // Render only the filtered images
-    renderGallery(filteredImages, state.allPeople, state.allAssignments);
+// Handler for when a tag checkbox is changed
+export function handleTagFilterChange() {
+    const selectedCheckboxes = dom.tagFilterDropdown.querySelectorAll('input:checked');
+    state.selectedTags = Array.from(selectedCheckboxes).map(cb => cb.value);
+    applyFilters();
 }
 
 // =======================================================

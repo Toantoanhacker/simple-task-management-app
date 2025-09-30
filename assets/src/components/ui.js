@@ -163,3 +163,30 @@ export function renderPeople(people) {
         dom.peopleTagsContainer.appendChild(personTag);
     });
 }
+
+/**
+ * Renders the checkboxes for the person filter dropdown.
+ * @param {Array} people - The array of all people.
+ */
+export function renderTagFilter(people) {
+    // Clear previous content but keep the actions div
+    const actionsDiv = dom.tagFilterDropdown.querySelector('.tag-filter-actions');
+    dom.tagFilterDropdown.innerHTML = '';
+
+    people.forEach(person => {
+        const label = document.createElement('label');
+        label.className = 'tag-filter-item';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = person.id;
+
+        label.appendChild(checkbox);
+        label.append(` ${person.name}`); // Use .append to add text after the element
+
+        dom.tagFilterDropdown.appendChild(label);
+    });
+
+    // Re-append the actions div at the end
+    dom.tagFilterDropdown.appendChild(actionsDiv);
+}

@@ -20,6 +20,7 @@
 - title search support: PascalCase, camelCase, snake_case, kebab-case, Regular text splitted by spaces
 - the title saerch is not perfect and still has some unfixed bug like `ad -> add and ad` that's annoying but I'll fix that later on the future patches
 - tag search: search one or mor person tag combined like google sheet filter (the fact is that I'm also using filter to do so)
+- user can combine both search options together and it should work.
 
 ### MAJOR APP REBASE - Huge Update V2.0.0 Sep 30 2025 6:47PM
 - add new favions

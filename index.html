@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./favicons/icon.png">
+  <link rel="icon" type="image/x-icon" href="./favicons/icon.png">
   <title>STMA - simple task management app</title>
   <link rel="stylesheet" href="/main.css">
 </head>
+
 <body>
   <!-- Sidebar navigation -->
   <nav class="sidebar">
     <h2>Navigation</h2>
-    <hr/>
+    <hr />
   </nav>
 
   <!-- Main content -->
@@ -33,9 +35,19 @@
     <div class="management-panel">
       <h3>Search options:</h3>
       <div class="search-container">
-    <input type="search" id="search-input" placeholder="Search by keyword (e.g., Patient, Login, DoctorAdd)...">
-  </div>
+        <input type="search" id="search-input" placeholder="Search by keyword (e.g., Patient, Login, DoctorAdd)...">
+      </div>
 
+      <!--search by people tags-->
+      <div id="tag-filter-container" class="tag-filter-container">
+        <button id="tag-filter-btn" class="tag-filter-btn">Filter by Person ▼</button>
+        <div id="tag-filter-dropdown" class="tag-filter-dropdown">
+          <!-- Checkboxes for each person will be generated here by JS -->
+          <div class="tag-filter-actions">
+            <button id="tag-filter-clear-btn">Clear</button>
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -44,11 +56,11 @@
 
     <!-- Floating add button -->
     <div class="add-image-container">
-        <button id="add-image-btn" class="add-image-btn">+</button>
+      <button id="add-image-btn" class="add-image-btn">+</button>
     </div>
   </div>
 
-<!-- Lightbox -->
+  <!-- Lightbox -->
   <div id="lightbox" class="lightbox">
     <span class="close-lightbox">&times;</span>
 
@@ -57,7 +69,7 @@
       <button id="zoom-out-btn" class="zoom-btn">-</button>
       <button id="zoom-in-btn" class="zoom-btn">+</button>
     </div>
-    
+
     <img id="lightbox-img" src="" alt="">
   </div>
 
@@ -66,18 +78,18 @@
     <div class="modal-content">
       <span class="close-modal">&times;</span>
       <h2>Add New UI Template</h2>
-      
-<!-- Inside the #add-image-modal -->
-<form id="add-image-form">
-  <label for="image-caption-input">Caption:</label>
-  <input type="text" id="image-caption-input" required>
-  
-  <label for="image-file-input">Image File:</label>
-  <!--  MODIFIED: Add the 'multiple' attribute -->
-  <input type="file" id="image-file-input" accept="image/*" required multiple>
-  
-  <button type="submit">Upload & Save</button>
-</form>
+
+      <!-- Inside the #add-image-modal -->
+      <form id="add-image-form">
+        <label for="image-caption-input">Caption:</label>
+        <input type="text" id="image-caption-input" required>
+
+        <label for="image-file-input">Image File:</label>
+        <!--  MODIFIED: Add the 'multiple' attribute -->
+        <input type="file" id="image-file-input" accept="image/*" required multiple>
+
+        <button type="submit">Upload & Save</button>
+      </form>
 
     </div>
   </div>
@@ -95,4 +107,5 @@
 
   <script src="./assets/src/main.js" type="module"></script>
 </body>
+
 </html>
