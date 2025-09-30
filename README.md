@@ -15,6 +15,22 @@
 ---
 
 ## Logs
+### MAJOR APP REBASE - Huge Update V2.0.0 Sep 30 2025
+- add new favions
+- refactored the favions to assets folder
+- add src folder
+
+```txt
+ ## divide and conquer: huge rebase split scipt.js into smaller modules for better maintaining (will be in ./assets/src and ./assets/src/components)
+- DBClient.js : very similar to DBContext.java in servlet using this to connect to postgres
+- api.js : fetch data from postgres
+- main.js : the app endpond to finally get everything works together
+- handler.js : managing action, do things and catch exception
+- lightbox.js : the lightbox function
+- state.js : shared application state. Holds data that is fetched once and then used
+- ui.js : generate dynamic html content for the page
+```
+- delete script.js cause we dont need it anymore
 
 ### More flexible uploads & Notes section patch 1.0.2 Sep 17 2025 7:21PM
 - add multiple image uploads

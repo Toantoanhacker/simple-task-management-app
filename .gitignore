@@ -9,7 +9,7 @@ dist/
 */dist/
 
 # NetBeans private project settings
-nbproject/
+/nbproject/
 
 # Compiled class files
 *.class
@@ -34,4 +34,4 @@ gen/
 
 
 # Database file
-/src
+/src/
