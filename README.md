@@ -15,7 +15,10 @@
 ---
 
 ## Logs
-### New search function - patch 2.0.1 Sep 30 2025
+### GUI Improvements - patch 2.1.1 Sep 30 2025 8:11PM
+- improve a bit gui display
+
+### New search function - patch 2.1.0 Sep 30 2025 7:27PM
 - there are 2 search function: title-based and person-tag-based
 - title search support: PascalCase, camelCase, snake_case, kebab-case, Regular text splitted by spaces
 - the title saerch is not perfect and still has some unfixed bug like `ad -> add and ad` that's annoying but I'll fix that later on the future patches
