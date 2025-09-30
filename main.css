@@ -634,3 +634,21 @@ body {
 .notes-toggle-btn.has-notes:hover {
   background-color: #218838; /* Darker green on hover */
 }
+.search-container {
+  margin-top: 15px; /* Space above the tags */
+}
+
+#search-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box; /* Important for 100% width */
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}

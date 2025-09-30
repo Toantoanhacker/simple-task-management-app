@@ -15,21 +15,24 @@
 ---
 
 ## Logs
-### MAJOR APP REBASE - Huge Update V2.0.0 Sep 30 2025
+### New search function - patch 2.0.1 Sep 30 2025
+- there are 2 search function: title-based and person-tag-based
+- title search support: PascalCase, camelCase, snake_case, kebab-case, Regular text splitted by spaces
+- the title saerch is not perfect and still has some unfixed bug like `ad -> add and ad` that's annoying but I'll fix that later on the future patches
+- tag search: search one or mor person tag combined like google sheet filter (the fact is that I'm also using filter to do so)
+
+### MAJOR APP REBASE - Huge Update V2.0.0 Sep 30 2025 6:47PM
 - add new favions
 - refactored the favions to assets folder
 - add src folder
-
-```txt
- ## divide and conquer: huge rebase split scipt.js into smaller modules for better maintaining (will be in ./assets/src and ./assets/src/components)
-- DBClient.js : very similar to DBContext.java in servlet using this to connect to postgres
-- api.js : fetch data from postgres
-- main.js : the app endpond to finally get everything works together
-- handler.js : managing action, do things and catch exception
-- lightbox.js : the lightbox function
-- state.js : shared application state. Holds data that is fetched once and then used
-- ui.js : generate dynamic html content for the page
-```
+- *divide and conquer: huge rebase split scipt.js into smaller modules for better maintaining (will be in ./assets/src and ./assets/src/components)*
+- `DBClient.js` : very similar to DBContext.java in servlet using this to connect to postgres
+- `api.js` : fetch data from postgres
+- `main.js` : the app endpond to finally get everything works together
+- `handler.js` : managing action, do things and catch exception
+- `lightbox.js` : the lightbox functions
+- `state.js` : shared application state. Holds data that is fetched once and then used
+- `ui.js` : generate dynamic html content for the page
 - delete script.js cause we dont need it anymore
 
 ### More flexible uploads & Notes section patch 1.0.2 Sep 17 2025 7:21PM

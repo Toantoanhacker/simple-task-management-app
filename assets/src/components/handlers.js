@@ -3,6 +3,47 @@
 import { supabase } from '../DBClient.js';
 import { state, dom } from './state.js';
 import { initializeApp } from '../main.js'; // Import initializeApp to trigger UI refreshes
+import { renderGallery } from './ui.js';
+
+// =======================================================
+// SEARCH HANDLERS : NEW SECTION
+// =======================================================
+
+/**
+ * Normalizes text for searching by removing cases, dashes, and underscores.
+ * E.g., "Doctor_Add-Patient" -> "doctor add patient"
+ * @param {string} str - The string to normalize.
+ * @returns {string} The normalized string.
+ */
+function normalizeText(str) {
+    if (!str) return '';
+    return str
+        .replace(/_|-/g, ' ') // Replace underscores and dashes with spaces
+        .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space before capital letters in camelCase
+        .toLowerCase()
+        .trim();
+}
+
+/**
+ * Filters and re-renders the gallery based on the search input value.
+ */
+export function handleSearch() {
+    const searchTerm = normalizeText(dom.searchInput.value);
+
+    if (!searchTerm) {
+        // If search is empty, render all images
+        renderGallery(state.allImages, state.allPeople, state.allAssignments);
+        return;
+    }
+
+    const filteredImages = state.allImages.filter(image => {
+        const normalizedCaption = normalizeText(image.caption);
+        return normalizedCaption.includes(searchTerm);
+    });
+
+    // Render only the filtered images
+    renderGallery(filteredImages, state.allPeople, state.allAssignments);
+}
 
 // =======================================================
 // MODAL HANDLERS

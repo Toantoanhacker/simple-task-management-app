@@ -39,6 +39,8 @@ export const dom = {
     imageFileInput: document.getElementById('image-file-input'),
     // Assignment modal
     assignPersonModal: document.getElementById('assign-person-modal'),
+    // search
+    searchInput: document.getElementById('search-input'),
     // Lightbox
     lightbox: document.getElementById('lightbox'),
     lightboxImg: document.getElementById('lightbox-img'),

@@ -39,6 +39,8 @@ function setupEventListeners() {
     });
     
     dom.imageFileInput.addEventListener('change', handlers.handleFileSelect);
+    // search listener
+        dom.searchInput.addEventListener('input', handlers.handleSearch);
 
     // Modal closing listeners
     document.querySelectorAll('.close-modal').forEach(btn => btn.onclick = handlers.closeAllModals);
