@@ -6,11 +6,23 @@
 
 > **File images cho UI của project:** chi tiết hình ảnh cho UI của project
 
-> **Công nghệ sử dụng:** Vibe coding & Half Human Coding and debuging AI code
+> **Công nghệ sử dụng:** Coding with AI support
 
+> Use vanilla JavaScript with Vite serverless build using Node 22.x runtime, connects to Supabase Postgres (handled all the db jobs)
+> Track the frontend/backend progress of each screen, take notes, assign a person to each screen, filter by person, title etc.
 ---
 
 * Template source: **[Full EMR (Electronic Medical Records)](https://drapcode.com/templates/electronic-medical-records-emr)**
+
+> **App hoàn chỉnh**
+<h3 align="center">
+    <img src="./img/stma.png" width="100%"/>
+<h3>
+
+> **Database schema**
+<h3 align="center">
+    <img src="./img/schemSTMA.png" width="100%"/>
+<h3>
 
 ---
 
